@@ -34,8 +34,3 @@ npm run build
 ```bash
 npm run start
 ```
-<<<<<<< HEAD
-    
-=======
-    
->>>>>>> origin/main
