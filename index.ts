@@ -54,6 +54,16 @@ const mergeSortFile = (filename: string, outputFilename: string, bufferSize: num
             buffer.length = 0
         }
     }).on('close', async () => {
+        if(buffer.length > 0) {
+            console.log(buffer)
+            const partialName = `partial-${++counter}.txt`
+            const partialPath = path.join(process.cwd(), 'partials', partialName)
+            buffer.sort()
+            buffer.forEach(s => fs.appendFileSync(partialPath, s + '\n'))
+            const tmpResultFileName = `tmp-${counter}.txt`
+            const tmpResultFilePath = path.join(process.cwd(), 'tmp', tmpResultFileName)
+            fs.openSync(tmpResultFilePath, 'w')
+        }
         // Сортировка данных файла
         let tmpResultFileCounter = 1
         while (tmpResultFileCounter < counter) {
@@ -190,5 +200,5 @@ const counterSortFile = (filename: string, outFilename: string) => {
     })
 }
 
-mergeSortFile("merge_target.txt", "merge_result.txt", 10)
-counterSortFile("target.txt", "counter_result.txt")
+mergeSortFile("target.txt", "merge_result.txt", 100000)
+//counterSortFile("target.txt", "counter_result.txt")
